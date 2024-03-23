@@ -1,7 +1,16 @@
 import 'package:flutter/material.dart';
 import 'landingPage.dart';
+import 'provider/spending.dart';
+import 'package:provider/provider.dart';
+
+
 void main() {
-  runApp(const MyApp());
+  runApp(
+    ChangeNotifierProvider(
+      create: (context) => SpendingListProvider(),
+      child: const MyApp(), // Your Flutter app
+    ),
+  );
 }
 
 class MyApp extends StatelessWidget {

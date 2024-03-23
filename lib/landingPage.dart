@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
-import 'widgets/spending.dart';
+import 'package:provider/provider.dart';
+import 'provider/spending.dart';
+import 'widgets/spendingWidget.dart';
+import 'recordingPage.dart';
 
 class LandingPage extends StatefulWidget {
   const LandingPage({super.key});
@@ -135,15 +138,17 @@ class _LandingPageState extends State<LandingPage> {
                         ),
                         child: ElevatedButton(
                           onPressed: () {
-                            // Handle button press
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => const RecordingPage()),
+                            );
                           },
                           style: ElevatedButton.styleFrom(
                             backgroundColor: Colors.deepPurple,
                             shadowColor: Colors.transparent, // No shadow
                             padding: const EdgeInsets.symmetric(
-                                horizontal: 32.0,
-                                vertical:
-                                    16.0), 
+                                horizontal: 32.0, vertical: 16.0),
                             shape: RoundedRectangleBorder(
                               borderRadius:
                                   BorderRadius.circular(20), // Rounded corners
@@ -151,8 +156,9 @@ class _LandingPageState extends State<LandingPage> {
                           ),
                           child: const Text(
                             '记一笔',
-                            style:
-                                TextStyle(fontSize: 18, color: Colors.white), // Increase font size
+                            style: TextStyle(
+                                fontSize: 18,
+                                color: Colors.white), // Increase font size
                           ),
                         ),
                       ),
@@ -165,11 +171,18 @@ class _LandingPageState extends State<LandingPage> {
               flex: 4,
               child: Container(
                 padding: const EdgeInsets.all(16.0),
-                child: ListView(
-                  children: const [
-                    Spending(category: "餐饮", amount: 500),
-                    // Add more Spending widgets here
-                  ],
+                child: Consumer<SpendingListProvider>(
+                  builder: (context, spendingListProvider, child) {
+                    return ListView.builder(
+                      itemCount: spendingListProvider.spendings.length,
+                      itemBuilder: (context, index) {
+                        final spending = spendingListProvider.spendings[index];
+                        return Spending(
+                            category: spending.category,
+                            amount: spending.amount);
+                      },
+                    );
+                  },
                 ),
               ),
             ),
