@@ -48,8 +48,8 @@ class _RecordingPageState extends State<RecordingPage> {
         setState(() {
           _isListening = false;
           _micIcon = Icons.mic;
-          _category = '购物';
-          _amount = 243.0;
+          _category = _isExpense ? '购物' : "理财";
+          _amount = _isExpense ? 243.0 : 500;
           _amountController.text = _amount.toString();
           _isLoading = false;
         });
