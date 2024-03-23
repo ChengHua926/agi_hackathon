@@ -3,6 +3,7 @@ import 'package:provider/provider.dart';
 import 'provider/spending.dart';
 import 'widgets/spendingWidget.dart';
 import 'recordingPage.dart';
+import 'chatPage.dart';
 
 class LandingPage extends StatefulWidget {
   const LandingPage({super.key});
@@ -14,11 +15,18 @@ class LandingPage extends StatefulWidget {
 class _LandingPageState extends State<LandingPage> {
   int _selectedIndex = 0;
 
-  void _onItemTapped(int index) {
-    setState(() {
-      _selectedIndex = index;
-    });
-  }
+void _onItemTapped(int index) {
+  setState(() {
+    _selectedIndex = index;
+    if (index == 1) {
+      // Navigate to ChatPage
+      Navigator.push(
+        context,
+        MaterialPageRoute(builder: (context) => ChatPage()),
+      );
+    }
+  });
+}
 
   @override
   Widget build(BuildContext context) {
@@ -184,6 +192,7 @@ class _LandingPageState extends State<LandingPage> {
           BottomNavigationBarItem(
             icon: Icon(Icons.search),
             label: '建议',
+            //navigate to ChatPage
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.bar_chart),
