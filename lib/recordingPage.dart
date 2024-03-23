@@ -44,7 +44,7 @@ class _RecordingPageState extends State<RecordingPage> {
       });
     } else {
       setState(() => _isLoading = true);
-      Future.delayed(const Duration(seconds: 1), () {
+      Future.delayed(const Duration(seconds: 3), () {
         setState(() {
           _isListening = false;
           _micIcon = Icons.mic;
@@ -61,7 +61,7 @@ class _RecordingPageState extends State<RecordingPage> {
     if (_formKey.currentState!.validate()) {
       _formKey.currentState!.save();
       Provider.of<SpendingListProvider>(context, listen: false)
-          .addSpending(_category!, _amount);
+          .addSpending(_category!, _amount, _isExpense);
       Navigator.pop(context);
     }
   }

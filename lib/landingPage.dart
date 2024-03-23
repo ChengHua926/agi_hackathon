@@ -27,143 +27,114 @@ class _LandingPageState extends State<LandingPage> {
         child: Column(
           children: [
             Expanded(
-              flex: 1,
-              child: Container(
-                padding: const EdgeInsets.fromLTRB(
-                    16, 16, 0, 10), // Added left padding
-                alignment: Alignment.topLeft,
-                child: RichText(
-                  text: const TextSpan(
-                    style: TextStyle(
-                      fontSize: 34, // Bigger font size
-                      fontWeight: FontWeight.normal,
-                      color: Colors.black, // Default text color
-                    ),
-                    children: <TextSpan>[
-                      TextSpan(text: "你这周还可以花"), // Regular text
-                      TextSpan(
-                        text: "250元",
-                        style: TextStyle(
-                          fontSize: 38, // Even larger font size for the number
-                          fontWeight: FontWeight.bold,
-                          color: Colors.red, // Highlight color
+              flex: 3,
+              child: Stack(
+                alignment: Alignment.center,
+                children: [
+                  Row(
+                    children: [
+                      Expanded(
+                        child: Card(
+                          margin: const EdgeInsets.all(8.0),
+                          elevation: 4.0,
+                          child: Container(
+                            padding: const EdgeInsets.all(16.0),
+                            child: const Column(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              children: [
+                                Text(
+                                  "支出",
+                                  style: TextStyle(fontSize: 18),
+                                ),
+                                SizedBox(height: 4.0),
+                                Text(
+                                  "¥5000",
+                                  style: TextStyle(
+                                    fontSize: 32,
+                                    fontWeight: FontWeight.bold,
+                                    color: Colors.deepOrange,
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                        ),
+                      ),
+                      Expanded(
+                        child: Card(
+                          margin: const EdgeInsets.all(8.0),
+                          elevation: 4.0,
+                          child: Container(
+                            padding: const EdgeInsets.all(16.0),
+                            child: const Column(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              children: [
+                                Text(
+                                  "收入",
+                                  style: TextStyle(fontSize: 18),
+                                ),
+                                SizedBox(height: 4.0),
+                                Text(
+                                  "¥10000",
+                                  style: TextStyle(
+                                    fontSize: 32,
+                                    fontWeight: FontWeight.bold,
+                                    color: Colors.green,
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
                         ),
                       ),
                     ],
                   ),
-                ),
+                ],
               ),
             ),
-            Expanded(
-              flex: 3,
+            Padding(
+              padding: const EdgeInsets.fromLTRB(16, 16, 16, 16),
               child: Container(
-                padding: const EdgeInsets.symmetric(horizontal: 16.0),
-                child: Stack(
-                  alignment: Alignment.center,
-                  children: [
-                    Row(
-                      children: [
-                        Expanded(
-                          child: Card(
-                            margin: const EdgeInsets.all(8.0),
-                            elevation: 4.0, // Adjust the elevation as needed
-                            child: Container(
-                              padding: const EdgeInsets.all(16.0),
-                              child: const Column(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                crossAxisAlignment: CrossAxisAlignment.center,
-                                children: [
-                                  Text(
-                                    "支出",
-                                    style: TextStyle(fontSize: 18),
-                                  ),
-                                  SizedBox(
-                                      height:
-                                          4.0), // Spacing for aesthetic purposes
-                                  Text(
-                                    "¥5000",
-                                    style: TextStyle(
-                                      fontSize: 32,
-                                      fontWeight: FontWeight.bold,
-                                      color: Colors
-                                          .deepOrange, // Adjust the color as needed
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            ),
-                          ),
-                        ),
-                        Expanded(
-                          child: Card(
-                            margin: const EdgeInsets.all(8.0),
-                            elevation: 4.0,
-                            child: Container(
-                              padding: const EdgeInsets.all(16.0),
-                              child: const Column(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                crossAxisAlignment: CrossAxisAlignment.center,
-                                children: [
-                                  Text(
-                                    "收入",
-                                    style: TextStyle(fontSize: 18),
-                                  ),
-                                  SizedBox(height: 4.0),
-                                  Text(
-                                    "¥10000",
-                                    style: TextStyle(
-                                      fontSize: 32,
-                                      fontWeight: FontWeight.bold,
-                                      color: Colors
-                                          .green, // Adjust the color as needed
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            ),
-                          ),
-                        ),
-                      ],
+                width: double.infinity,
+                child: Ink(
+                  decoration: BoxDecoration(
+                    gradient: const LinearGradient(
+                      colors: [Colors.purple, Colors.deepPurple],
+                      begin: Alignment.topLeft,
+                      end: Alignment.bottomRight,
                     ),
-                    Positioned(
-                      bottom: 16,
-                      child: Ink(
-                        decoration: BoxDecoration(
-                          gradient: const LinearGradient(
-                            colors: [Colors.purple, Colors.deepPurple],
-                            begin: Alignment.topLeft,
-                            end: Alignment.bottomRight,
-                          ),
-                          borderRadius: BorderRadius.circular(20),
+                    borderRadius: BorderRadius.circular(20),
+                  ),
+                  child: ElevatedButton(
+                    onPressed: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => const RecordingPage(),
                         ),
-                        child: ElevatedButton(
-                          onPressed: () {
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) => const RecordingPage()),
-                            );
-                          },
-                          style: ElevatedButton.styleFrom(
-                            backgroundColor: Colors.deepPurple,
-                            shadowColor: Colors.transparent, // No shadow
-                            padding: const EdgeInsets.symmetric(
-                                horizontal: 32.0, vertical: 16.0),
-                            shape: RoundedRectangleBorder(
-                              borderRadius:
-                                  BorderRadius.circular(20), // Rounded corners
-                            ),
-                          ),
-                          child: const Text(
-                            '记一笔',
-                            style: TextStyle(
-                                fontSize: 18,
-                                color: Colors.white), // Increase font size
-                          ),
-                        ),
+                      );
+                    },
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: Colors.deepPurple,
+                      shadowColor: Colors.transparent,
+                      padding: const EdgeInsets.symmetric(
+                        horizontal: 32.0,
+                        vertical: 16.0,
+                      ),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(20),
                       ),
                     ),
-                  ],
+                    child: const Text(
+                      '记一笔',
+                      style: TextStyle(
+                        fontSize: 18,
+                        color: Colors.white,
+                      ),
+                    ),
+                  ),
                 ),
               ),
             ),
@@ -178,8 +149,10 @@ class _LandingPageState extends State<LandingPage> {
                       itemBuilder: (context, index) {
                         final spending = spendingListProvider.spendings[index];
                         return Spending(
-                            category: spending.category,
-                            amount: spending.amount);
+                          category: spending.category,
+                          amount: spending.amount,
+                          isExpense: spending.isExpense,
+                        );
                       },
                     );
                   },
