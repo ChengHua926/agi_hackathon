@@ -1,16 +1,10 @@
-# agi_hackathon
+# 钱眼理财师
+马云看了都想记账
 
-A new Flutter project.
+# 满足需求
+1. 更方便的交互+记录
+2. 结构化财务数据满足非结构化财务需求
 
-## Getting Started
+# Agent Flow & Prompt
 
-This project is a starting point for a Flutter application.
 
-A few resources to get you started if this is your first Flutter project:
-
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
-
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
