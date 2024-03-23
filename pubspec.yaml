@@ -37,6 +37,7 @@ dependencies:
   cupertino_icons: ^1.0.6
   provider: ^6.1.2
   speech_to_text: ^6.6.1
+  record: ^4.4.4
 
 dev_dependencies:
   flutter_test:
