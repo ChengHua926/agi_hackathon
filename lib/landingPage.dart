@@ -28,70 +28,82 @@ class _LandingPageState extends State<LandingPage> {
           children: [
             Expanded(
               flex: 3,
-              child: Stack(
-                alignment: Alignment.center,
-                children: [
-                  Row(
+              child: Consumer<SpendingListProvider>(
+                builder: (context, spendingListProvider, child) {
+                  // Calculate totals
+                  double totalExpenses = spendingListProvider.spendings
+                      .where((spending) => spending.isExpense)
+                      .fold(0.0, (sum, item) => sum + item.amount);
+                  double totalIncome = spendingListProvider.spendings
+                      .where((spending) => !spending.isExpense)
+                      .fold(0.0, (sum, item) => sum + item.amount);
+
+                  return Stack(
+                    alignment: Alignment.center,
                     children: [
-                      Expanded(
-                        child: Card(
-                          margin: const EdgeInsets.all(8.0),
-                          elevation: 4.0,
-                          child: Container(
-                            padding: const EdgeInsets.all(16.0),
-                            child: const Column(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              crossAxisAlignment: CrossAxisAlignment.center,
-                              children: [
-                                Text(
-                                  "支出",
-                                  style: TextStyle(fontSize: 18),
+                      Row(
+                        children: [
+                          Expanded(
+                            child: Card(
+                              margin: const EdgeInsets.all(8.0),
+                              elevation: 4.0,
+                              child: Container(
+                                padding: const EdgeInsets.all(16.0),
+                                child: Column(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  crossAxisAlignment: CrossAxisAlignment.center,
+                                  children: [
+                                    const Text(
+                                      "支出",
+                                      style: TextStyle(fontSize: 18),
+                                    ),
+                                    SizedBox(height: 4.0),
+                                    Text(
+                                      "¥${totalExpenses.toStringAsFixed(2)}",
+                                      style: const TextStyle(
+                                        fontSize: 32,
+                                        fontWeight: FontWeight.bold,
+                                        color: Colors.deepOrange,
+                                      ),
+                                    ),
+                                  ],
                                 ),
-                                SizedBox(height: 4.0),
-                                Text(
-                                  "¥5000",
-                                  style: TextStyle(
-                                    fontSize: 32,
-                                    fontWeight: FontWeight.bold,
-                                    color: Colors.deepOrange,
-                                  ),
-                                ),
-                              ],
+                              ),
                             ),
                           ),
-                        ),
-                      ),
-                      Expanded(
-                        child: Card(
-                          margin: const EdgeInsets.all(8.0),
-                          elevation: 4.0,
-                          child: Container(
-                            padding: const EdgeInsets.all(16.0),
-                            child: const Column(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              crossAxisAlignment: CrossAxisAlignment.center,
-                              children: [
-                                Text(
-                                  "收入",
-                                  style: TextStyle(fontSize: 18),
+                          Expanded(
+                            child: Card(
+                              margin: const EdgeInsets.all(8.0),
+                              elevation: 4.0,
+                              child: Container(
+                                padding: const EdgeInsets.all(16.0),
+                                child: Column(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  crossAxisAlignment: CrossAxisAlignment.center,
+                                  children: [
+                                    const Text(
+                                      "收入",
+                                      style: TextStyle(fontSize: 18),
+                                    ),
+                                    SizedBox(height: 4.0),
+                                    Text(
+                                      "¥${totalIncome.toStringAsFixed(2)}",
+                                      style: const TextStyle(
+                                        fontSize: 32,
+                                        fontWeight: FontWeight.bold,
+                                        color: Colors.green,
+                                      ),
+                                    ),
+                                  ],
                                 ),
-                                SizedBox(height: 4.0),
-                                Text(
-                                  "¥10000",
-                                  style: TextStyle(
-                                    fontSize: 32,
-                                    fontWeight: FontWeight.bold,
-                                    color: Colors.green,
-                                  ),
-                                ),
-                              ],
+                              ),
                             ),
                           ),
-                        ),
+                        ],
                       ),
                     ],
-                  ),
-                ],
+                  );
+                },
               ),
             ),
             Padding(
@@ -145,9 +157,10 @@ class _LandingPageState extends State<LandingPage> {
                 child: Consumer<SpendingListProvider>(
                   builder: (context, spendingListProvider, child) {
                     return ListView.builder(
+                      reverse: false, // This will reverse the order of the list items
                       itemCount: spendingListProvider.spendings.length,
                       itemBuilder: (context, index) {
-                        final spending = spendingListProvider.spendings[index];
+                        final spending = spendingListProvider.spendings[spendingListProvider.spendings.length - 1 - index]; // Access items from the end of the list
                         return Spending(
                           category: spending.category,
                           amount: spending.amount,
