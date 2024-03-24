@@ -29,24 +29,43 @@ class _ChatPageState extends State<ChatPage> {
       _messages.add(Message(text, false));
     });
     _controller.clear();
+    // _scrollController.animateTo(
+    //   _scrollController.position.maxScrollExtent,
+    //   duration: Duration(milliseconds: 200),
+    //   curve: Curves.easeOut,
+    // );
 
     // Add a delay
-    await Future.delayed(Duration(seconds: 2));
+    // await Future.delayed(Duration(seconds: 2));
 
     // Future<String> futureString = callOpenAI();
     String result;
 
     final response = await http.post(
-      Uri.parse('http://localhost:3000/api/messages'),
+      Uri.parse('http://127.0.0.1:8000/gpt/'),
       headers: <String, String>{
         'Content-Type': 'application/json; charset=UTF-8',
       },
-      body: jsonEncode(<String, String>{'message': 'dwdawda'}),
+      body: jsonEncode({'text': text}),
     );
 
-    result = response.body;
+    // result = "dwadaw";
+    try {
+      if (response.statusCode == 200) {
+        final result_ =
+            json.decode(const Utf8Decoder().convert(response.bodyBytes));
+        print(result_);
+        result = result_["content"];
+      } else {
+        result = "error";
+      }
+    } catch (e) {
+      result = "狗日的出问题了";
+    }
+    setState(() {
+      _messages.add(Message(result, true));
+    });
 
-    _messages.add(Message(result, true));
     _scrollController.animateTo(
       _scrollController.position.maxScrollExtent,
       duration: Duration(milliseconds: 200),
@@ -64,14 +83,20 @@ class _ChatPageState extends State<ChatPage> {
         children: [
           Expanded(
             child: ListView.builder(
-                controller: _scrollController,
-                itemCount: _messages.length,
-                itemBuilder: (context, index) {
-                  final message = _messages[index];
-                  return Container(
-                    alignment: message.isFromBot
-                        ? Alignment.centerLeft
-                        : Alignment.centerRight,
+              controller: _scrollController,
+              itemCount: _messages.length,
+              itemBuilder: (context, index) {
+                final message = _messages[index];
+                return Container(
+                  alignment: message.isFromBot
+                      ? Alignment.centerLeft
+                      : Alignment.centerRight,
+                  child: ConstrainedBox(
+                    constraints: BoxConstraints(
+                      maxWidth: MediaQuery.of(context).size.width *
+                          2 /
+                          3, // 最大宽度为屏幕宽度的2/3
+                    ),
                     child: Container(
                       padding: EdgeInsets.all(10.0),
                       margin: EdgeInsets.all(10.0),
@@ -86,8 +111,10 @@ class _ChatPageState extends State<ChatPage> {
                         style: TextStyle(color: Colors.white),
                       ),
                     ),
-                  );
-                }),
+                  ),
+                );
+              },
+            ),
           ),
           Container(
             padding: EdgeInsets.symmetric(horizontal: 8.0),
